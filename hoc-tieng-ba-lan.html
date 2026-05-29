@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Học Tiếng Ba Lan – Động Từ Cơ Bản</title>
+<meta property="og:title" content="Học Tiếng Ba Lan – Động Từ Cơ Bản"/>
+<meta property="og:description" content="10 động từ thiết yếu tiếng Ba Lan với phát âm chuẩn 3 lần, hình minh họa và tiếng Việt tương ứng."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Be Vietnam Pro',sans-serif;background:#0a0e1a;overflow-x:hidden}
+
+/* ── HEADER ── */
+.header-bar{
+  background:linear-gradient(135deg,#dc143c 0%,#a00020 50%,#6b0015 100%);
+  padding:12px 20px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:3px solid #ffd700;position:relative;z-index:10;flex-wrap:wrap;gap:8px;
+}
+.flag-strip{display:flex;align-items:center;gap:10px}
+.flag-icon{width:36px;height:24px;border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,.3);flex-shrink:0}
+.lesson-title{color:#ffd700;font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;letter-spacing:1px;text-shadow:0 2px 4px rgba(0,0,0,.5)}
+.progress-info{color:rgba(255,255,255,.9);font-size:13px;font-weight:600}
+
+/* ── LAYOUT ── */
+.main-stage{
+  display:grid;grid-template-columns:1fr 300px;
+  height:calc(100vh - 64px);min-height:520px;
+}
+@media(max-width:700px){
+  .main-stage{grid-template-columns:1fr;grid-template-rows:1fr auto;height:auto}
+  .word-list-panel{max-height:220px;border-left:none;border-top:1px solid rgba(255,255,255,.08)}
+}
+
+/* ── STAGE ── */
+.word-display-area{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:20px 20px 90px;position:relative;background:#0d1220;overflow:hidden;
+}
+
+/* ── ILLUSTRATION ── */
+.illustration-box{
+  width:220px;height:175px;margin-bottom:20px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.03);border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);overflow:hidden;position:relative;
+  opacity:0;transform:translateY(-20px) scale(.9);
+  transition:all .6s cubic-bezier(.34,1.56,.64,1);
+}
+.illustration-box.visible{opacity:1;transform:translateY(0) scale(1)}
+.reading-pulse{
+  position:absolute;inset:0;border-radius:16px;
+  border:2px solid rgba(255,215,0,.6);
+  animation:reading-ring 1.5s ease infinite;pointer-events:none;opacity:0;
+}
+.reading-pulse.active{opacity:1}
+@keyframes reading-ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.08);opacity:0}}
+
+/* ── WORDS ── */
+.polish-word-block{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:16px;min-height:90px;justify-content:center}
+.pl-flag-inline{opacity:0;transform:translateX(-30px);transition:all .5s ease .1s}
+.pl-flag-inline.visible{opacity:1;transform:translateX(0)}
+.polish-word{
+  font-family:'Oswald',sans-serif;font-size:clamp(42px,8vw,68px);font-weight:700;
+  color:#ffd700;text-shadow:0 0 30px rgba(255,215,0,.4),0 4px 8px rgba(0,0,0,.8);
+  letter-spacing:3px;opacity:0;transform:translateY(40px);
+  transition:all .7s cubic-bezier(.34,1.56,.64,1) .2s;line-height:1;text-align:center;
+}
+.polish-word.visible{opacity:1;transform:translateY(0)}
+.pronunciation-hint{color:rgba(255,215,0,.6);font-size:14px;font-style:italic;opacity:0;transition:opacity .4s ease .5s;letter-spacing:1px}
+.pronunciation-hint.visible{opacity:1}
+.divider-line{
+  width:200px;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,215,0,.6),transparent);
+  margin:8px 0;opacity:0;transform:scaleX(0);transition:all .5s ease .4s;
+}
+.divider-line.visible{opacity:1;transform:scaleX(1)}
+.viet-word-block{display:flex;flex-direction:column;align-items:center;gap:6px}
+.vn-flag-inline{opacity:0;transform:translateX(30px);transition:all .5s ease .5s}
+.vn-flag-inline.visible{opacity:1;transform:translateX(0)}
+.viet-word{
+  font-size:clamp(24px,5vw,38px);font-weight:700;color:#fff;
+  text-shadow:0 2px 12px rgba(220,20,60,.5),0 4px 8px rgba(0,0,0,.8);
+  opacity:0;transform:translateY(30px);
+  transition:all .6s cubic-bezier(.34,1.56,.64,1) .6s;letter-spacing:1px;text-align:center;
+}
+.viet-word.visible{opacity:1;transform:translateY(0)}
+
+/* ── READ DOTS ── */
+.read-counter{display:flex;gap:8px;margin-top:16px}
+.dot{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.3);transition:all .3s ease}
+.dot.active{background:#ffd700;border-color:#ffd700;box-shadow:0 0 8px rgba(255,215,0,.6);transform:scale(1.3)}
+.dot.done{background:rgba(255,215,0,.5);border-color:rgba(255,215,0,.5)}
+
+/* ── TEACHER ── */
+.teacher-wrap{position:absolute;right:16px;top:16px;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.speech-bubble{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,215,0,.35);
+  border-radius:12px;padding:7px 14px;color:#ffd700;font-size:13px;font-weight:600;
+  white-space:nowrap;opacity:0;transform:scale(.8) translateX(10px);
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;
+}
+.speech-bubble.visible{opacity:1;transform:scale(1) translateX(0)}
+
+/* ── CONTROLS ── */
+.controls-bar{
+  position:absolute;bottom:16px;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;z-index:10;
+}
+.ctrl-btn{
+  padding:10px 20px;border-radius:50px;border:none;cursor:pointer;
+  font-family:'Be Vietnam Pro',sans-serif;font-weight:600;font-size:14px;
+  transition:all .3s ease;display:flex;align-items:center;gap:6px;letter-spacing:.3px;
+}
+.ctrl-btn:active{transform:scale(.95)}
+.btn-prev{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15)}
+.btn-prev:hover{background:rgba(255,255,255,.14);color:#fff}
+.btn-speak{
+  background:linear-gradient(135deg,#dc143c,#ff4d6d);color:#fff;
+  box-shadow:0 4px 20px rgba(220,20,60,.4);padding:12px 28px;font-size:15px;
+}
+.btn-speak:hover{box-shadow:0 6px 28px rgba(220,20,60,.6);transform:translateY(-1px)}
+.btn-speak.reading{background:linear-gradient(135deg,#ff6b35,#ffa500);box-shadow:0 4px 20px rgba(255,165,0,.5);animation:pulse-btn 1s ease infinite}
+@keyframes pulse-btn{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+.btn-next{background:rgba(220,20,60,.15);color:#ff8096;border:1px solid rgba(220,20,60,.3)}
+.btn-next:hover{background:rgba(220,20,60,.25);color:#ff4d6d;border-color:rgba(220,20,60,.5)}
+
+/* ── WORD LIST ── */
+.word-list-panel{background:#111827;border-left:1px solid rgba(255,255,255,.08);overflow-y:auto;padding:16px 12px}
+.panel-title{color:#ffd700;font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,.2);opacity:.8}
+.word-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;cursor:pointer;transition:all .3s ease;margin-bottom:4px;border:1px solid transparent}
+.word-item:hover{background:rgba(255,255,255,.06);border-color:rgba(255,215,0,.2)}
+.word-item.active{background:rgba(220,20,60,.2);border-color:rgba(220,20,60,.5)}
+.word-item.done{background:rgba(255,215,0,.04);border-color:rgba(255,215,0,.15)}
+.item-num{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.word-item.active .item-num{background:#dc143c;color:#fff}
+.word-item.done .item-num{background:rgba(255,215,0,.3);color:#ffd700}
+.item-pl{font-family:'Oswald',sans-serif;color:rgba(255,215,0,.5);font-size:15px;font-weight:600;display:block;line-height:1.2}
+.word-item.active .item-pl,.word-item.done .item-pl{color:#ffd700}
+.item-vn{color:rgba(255,255,255,.5);font-size:12px;display:block}
+.word-item.active .item-vn{color:rgba(255,255,255,.85)}
+.check-icon{color:#ffd700;font-size:14px;opacity:0;transition:opacity .3s}
+.word-item.done .check-icon{opacity:1}
+
+/* ── BG ── */
+.bg-pattern{position:fixed;inset:0;background:radial-gradient(ellipse at 20% 30%,rgba(220,20,60,.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(255,255,255,.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+</style>
+</head>
+<body>
+<div class="bg-pattern"></div>
+
+<div class="header-bar">
+  <div class="flag-strip">
+    <svg class="flag-icon" viewBox="0 0 36 24"><rect width="36" height="12" fill="#fff"/><rect y="12" width="36" height="12" fill="#dc143c"/></svg>
+    <div class="lesson-title">HỌC TIẾNG BA LAN</div>
+  </div>
+  <div class="progress-info" id="progress-txt">Từ 1 / 10</div>
+  <div class="flag-strip">
+    <div class="lesson-title" style="color:#fff;font-size:14px">ĐỘNG TỪ CƠ BẢN</div>
+    <svg class="flag-icon" viewBox="0 0 36 24"><rect width="36" height="24" fill="#da251d"/><polygon points="18,5 21,14 30,14 23,19 26,28 18,23 10,28 13,19 6,14 15,14" fill="#ffcd00" transform="scale(0.7) translate(7.7,2)"/></svg>
+  </div>
+</div>
+
+<div class="main-stage">
+  <div class="word-display-area" id="stage">
+
+    <div class="illustration-box" id="illus-box">
+      <div class="reading-pulse" id="reading-pulse"></div>
+      <svg id="word-svg" width="200" height="160" viewBox="0 0 200 160"></svg>
+    </div>
+
+    <div class="polish-word-block">
+      <svg class="pl-flag-inline" id="pl-flag" width="48" height="32" viewBox="0 0 48 32">
+        <rect width="48" height="16" fill="#fff" rx="3"/>
+        <rect y="16" width="48" height="16" fill="#dc143c"/>
+      </svg>
+      <div class="polish-word" id="pol-word">Być</div>
+      <div class="pronunciation-hint" id="pron-hint">[bɨtɕ]</div>
+    </div>
+
+    <div class="divider-line" id="divider"></div>
+
+    <div class="viet-word-block">
+      <svg class="vn-flag-inline" id="vn-flag" width="48" height="32" viewBox="0 0 48 32">
+        <rect width="48" height="32" fill="#da251d" rx="3"/>
+        <polygon points="24,8 26.5,16 35,16 28.5,21 31,29 24,24 17,29 19.5,21 13,16 21.5,16" fill="#ffcd00"/>
+      </svg>
+      <div class="viet-word" id="viet-word">Là / Thì / Ở</div>
+    </div>
+
+    <div class="read-counter">
+      <div class="dot" id="dot0"></div>
+      <div class="dot" id="dot1"></div>
+      <div class="dot" id="dot2"></div>
+    </div>
+
+    <div class="teacher-wrap">
+      <div class="speech-bubble" id="speech-bubble">Nghe và lặp lại!</div>
+      <svg width="80" height="80" viewBox="0 0 90 90">
+        <circle cx="45" cy="28" r="18" fill="#f9c89b" stroke="#e8a87c" stroke-width="1.5"/>
+        <rect x="22" y="44" width="46" height="35" rx="8" fill="#1a3a6b"/>
+        <rect x="28" y="44" width="34" height="20" rx="4" fill="#2a5298"/>
+        <rect x="14" y="44" width="16" height="6" rx="3" fill="#1a3a6b"/>
+        <rect x="60" y="44" width="16" height="6" rx="3" fill="#1a3a6b"/>
+        <circle cx="38" cy="26" r="3" fill="#4a2c0a"/>
+        <circle cx="52" cy="26" r="3" fill="#4a2c0a"/>
+        <path d="M40 33 Q45 37 50 33" stroke="#c0735a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <rect x="37" y="12" width="16" height="8" rx="3" fill="#8b5a2b"/>
+        <rect x="35" y="17" width="20" height="4" rx="2" fill="#6b3f1a"/>
+      </svg>
+    </div>
+
+    <div class="controls-bar">
+      <button class="ctrl-btn btn-prev" id="btn-prev" onclick="prevWord()">← Trước</button>
+      <button class="ctrl-btn btn-speak" id="btn-speak" onclick="readWord()">🔊 Đọc 3 lần</button>
+      <button class="ctrl-btn btn-next" id="btn-next" onclick="nextWord()">Tiếp →</button>
+    </div>
+  </div>
+
+  <div class="word-list-panel">
+    <div class="panel-title">Danh sách từ</div>
+    <div id="word-list"></div>
+  </div>
+</div>
+
+<script>
+const words=[
+  {pl:"Być",vn:"Là / Thì / Ở",pron:"[bɨtɕ]",key:"be"},
+  {pl:"Mieć",vn:"Có",pron:"[mjɛtɕ]",key:"have"},
+  {pl:"Móc",vn:"Có thể",pron:"[mutsɛ]",key:"can"},
+  {pl:"Chcieć",vn:"Muốn",pron:"[xtsʲɛtɕ]",key:"want"},
+  {pl:"Musieć",vn:"Phải",pron:"[musʲɛtɕ]",key:"must"},
+  {pl:"Wiedzieć",vn:"Biết (sự việc)",pron:"[vʲɛdʑɛtɕ]",key:"know1"},
+  {pl:"Znać",vn:"Biết / Quen",pron:"[znatɕ]",key:"know2"},
+  {pl:"Robić",vn:"Làm",pron:"[rɔbʲitɕ]",key:"do"},
+  {pl:"Mieć na imię",vn:"Được gọi tên là",pron:"[mjɛtɕ na imʲɛ]",key:"name"},
+  {pl:"Stać się",vn:"Trở thành",pron:"[statɕ ɕɛ]",key:"become"}
+];
+
+const illustrations={
+  be:`<circle cx="100" cy="55" r="35" fill="#1a3a6b" opacity=".8"/>
+      <text x="100" y="62" text-anchor="middle" font-size="32" fill="#ffd700">∃</text>
+      <text x="100" y="140" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Tồn tại</text>`,
+  have:`<rect x="55" y="28" width="90" height="65" rx="8" fill="#1a3a6b" stroke="#ffd700" stroke-width="2"/>
+        <text x="100" y="70" text-anchor="middle" font-size="28" fill="#ffd700">🎁</text>
+        <text x="100" y="130" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Sở hữu</text>`,
+  can:`<polygon points="100,18 140,43 140,93 100,118 60,93 60,43" fill="#1a3a6b" stroke="#ffd700" stroke-width="2"/>
+       <text x="100" y="76" text-anchor="middle" font-size="26" fill="#ffd700">💪</text>
+       <text x="100" y="138" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Khả năng</text>`,
+  want:`<circle cx="100" cy="56" r="38" fill="none" stroke="#dc143c" stroke-width="3" stroke-dasharray="8,4"/>
+        <text x="100" y="64" text-anchor="middle" font-size="28" fill="#ffd700">⭐</text>
+        <text x="100" y="128" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Mong muốn</text>`,
+  must:`<rect x="63" y="23" width="74" height="72" rx="6" fill="#dc143c" opacity=".7"/>
+        <text x="100" y="66" text-anchor="middle" font-size="28" fill="#fff">⚡</text>
+        <text x="100" y="128" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Bắt buộc</text>`,
+  know1:`<circle cx="100" cy="53" r="35" fill="#0d2550"/>
+         <circle cx="100" cy="53" r="26" fill="#1a3a6b"/>
+         <text x="100" y="61" text-anchor="middle" font-size="26" fill="#ffd700">💡</text>
+         <text x="100" y="118" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Kiến thức</text>`,
+  know2:`<circle cx="70" cy="56" r="24" fill="#1a3a6b" stroke="#ffd700" stroke-width="1.5"/>
+         <circle cx="130" cy="56" r="24" fill="#dc143c" opacity=".7" stroke="#ffd700" stroke-width="1.5"/>
+         <text x="70" y="63" text-anchor="middle" font-size="18" fill="#fff">👤</text>
+         <text x="130" y="63" text-anchor="middle" font-size="18" fill="#fff">🤝</text>
+         <text x="100" y="114" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Quen biết</text>`,
+  do:`<rect x="38" y="33" width="124" height="56" rx="10" fill="#1a3a6b"/>
+      <rect x="83" y="89" width="34" height="18" rx="3" fill="#1a3a6b"/>
+      <text x="100" y="68" text-anchor="middle" font-size="24" fill="#ffd700">🔧</text>
+      <text x="100" y="128" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Hành động</text>`,
+  name:`<rect x="43" y="33" width="114" height="52" rx="6" fill="#0d2550" stroke="#ffd700" stroke-width="1.5"/>
+        <line x1="56" y1="48" x2="144" y2="48" stroke="#ffd700" stroke-width="1.5" opacity=".5"/>
+        <text x="100" y="66" text-anchor="middle" font-size="12" fill="#ffd700" font-family="sans-serif" font-weight="bold">Jan Kowalski</text>
+        <text x="100" y="118" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Tên gọi</text>`,
+  become:`<path d="M35,95 Q68,28 100,58 Q132,88 165,28" stroke="#ffd700" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="35" cy="95" r="8" fill="#dc143c"/>
+          <circle cx="165" cy="28" r="13" fill="#ffd700"/>
+          <text x="100" y="130" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.6)" font-family="sans-serif">Biến đổi</text>`
+};
+
+let current=0,readCount=0,isReading=false;
+
+function buildList(){
+  document.getElementById('word-list').innerHTML=words.map((w,i)=>`
+    <div class="word-item${i===0?' active':''}" id="item-${i}" onclick="jumpTo(${i})">
+      <div class="item-num">${i+1}</div>
+      <div style="flex:1">
+        <span class="item-pl">${w.pl}</span>
+        <span class="item-vn">${w.vn}</span>
+      </div>
+      <span class="check-icon">✓</span>
+    </div>`).join('');
+}
+
+function showWord(idx,animate=true){
+  readCount=0;updateDots(0);
+  const w=words[idx];
+  const ids=['pol-word','viet-word','pron-hint','illus-box','divider','pl-flag','vn-flag'];
+  if(animate){
+    ids.forEach(id=>document.getElementById(id).classList.remove('visible'));
+    setTimeout(()=>{
+      document.getElementById('word-svg').innerHTML=illustrations[w.key]||'';
+      document.getElementById('pol-word').textContent=w.pl;
+      document.getElementById('viet-word').textContent=w.vn;
+      document.getElementById('pron-hint').textContent=w.pron;
+      document.getElementById('illus-box').classList.add('visible');
+      setTimeout(()=>document.getElementById('pl-flag').classList.add('visible'),200);
+      setTimeout(()=>document.getElementById('pol-word').classList.add('visible'),300);
+      setTimeout(()=>document.getElementById('pron-hint').classList.add('visible'),600);
+      setTimeout(()=>document.getElementById('divider').classList.add('visible'),700);
+      setTimeout(()=>document.getElementById('vn-flag').classList.add('visible'),800);
+      setTimeout(()=>document.getElementById('viet-word').classList.add('visible'),900);
+    },200);
+  } else {
+    document.getElementById('word-svg').innerHTML=illustrations[w.key]||'';
+    document.getElementById('pol-word').textContent=w.pl;
+    document.getElementById('viet-word').textContent=w.vn;
+    document.getElementById('pron-hint').textContent=w.pron;
+    ids.forEach(id=>document.getElementById(id).classList.add('visible'));
+  }
+  document.getElementById('progress-txt').textContent=`Từ ${idx+1} / ${words.length}`;
+  document.querySelectorAll('.word-item').forEach((el,i)=>{
+    el.classList.remove('active');
+    if(i===idx) el.classList.add('active');
+  });
+}
+
+function updateDots(count){
+  for(let i=0;i<3;i++){
+    const d=document.getElementById('dot'+i);
+    d.classList.remove('active','done');
+    if(i<count) d.classList.add('done');
+    if(i===count&&count<3) d.classList.add('active');
+  }
+}
+
+function showBubble(text){
+  const b=document.getElementById('speech-bubble');
+  b.textContent=text;b.classList.add('visible');
+  setTimeout(()=>b.classList.remove('visible'),1800);
+}
+
+function readWord(){
+  if(isReading)return;
+  isReading=true;
+  const w=words[current];
+  const btn=document.getElementById('btn-speak');
+  btn.classList.add('reading');btn.textContent='🔊 Đang đọc...';
+  document.getElementById('reading-pulse').classList.add('active');
+  readCount=0;
+  const msgs=["Nghe lần 1!","Nghe lần 2!","Nghe lần 3!"];
+
+  function doRead(n){
+    if(n>2){
+      isReading=false;
+      btn.classList.remove('reading');btn.textContent='🔊 Đọc 3 lần';
+      document.getElementById('reading-pulse').classList.remove('active');
+      updateDots(3);
+      const item=document.getElementById('item-'+current);
+      if(item) item.classList.add('done');
+      return;
+    }
+    readCount=n;updateDots(n);showBubble(msgs[n]);
+    if('speechSynthesis' in window){
+      window.speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(w.pl);
+      u.lang='pl-PL';u.rate=0.5;u.pitch=1;u.volume=1;
+      const voices=window.speechSynthesis.getVoices();
+      const plV=voices.find(v=>v.lang&&v.lang.startsWith('pl'));
+      if(plV) u.voice=plV;
+      u.onend=()=>setTimeout(()=>doRead(n+1),1200);
+      u.onerror=()=>setTimeout(()=>doRead(n+1),1200);
+      window.speechSynthesis.speak(u);
+    } else {
+      setTimeout(()=>doRead(n+1),1500);
+    }
+  }
+  doRead(0);
+}
+
+function nextWord(){if(current<words.length-1){current++;showWord(current)}}
+function prevWord(){if(current>0){current--;showWord(current)}}
+function jumpTo(i){if(i!==current){current=i;showWord(current)}}
+
+if('speechSynthesis' in window){
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged=()=>{};
+}
+buildList();
+showWord(0,true);
+</script>
+</body>
+</html>
